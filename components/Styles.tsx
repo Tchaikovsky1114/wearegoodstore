@@ -19,7 +19,7 @@ export const NormalLink = styled.a`
 export const EmphasisWord = styled.span`
   font-weight: bold;
   text-decoration: underline;
-  color: #e50715;
+  color: #b23;
 `;
 
 export const ImagerWrapper = styled.div`
@@ -64,8 +64,8 @@ export const SubTheme = styled.p`
   align-items:center;
   flex-direction:column;
   padding: 5px 0;
-  color: #f00;
-  background-color:#ccc;
+  color: #b23;
+  background-color:#fff;
   border-radius: 20px;
   width: fit-content;
   padding: 0.2rem 0.6rem;
@@ -83,7 +83,13 @@ export const SubDescription = styled.p`
   color: black;
   word-break: keep-all;
 `
+export const ButtonWrapper = styled.div`
+margin: 2rem auto;
+display:flex;
+justify-content:center;
+align-items:center;
 
+`
 export const Button = styled.a`
   border: 1px solid black;
   padding: 1rem;

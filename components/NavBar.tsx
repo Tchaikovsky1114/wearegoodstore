@@ -9,19 +9,21 @@ const NavigationWrapper = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 520px;
-  max-width: 520px;
+  width: 440px;
+  max-width: 440px;
   padding: 1rem;
-  
   box-shadow: 3px 4px 12px gray;
   border-radius: 10px;
   background-color:beige;
   
 `;
-
+const Wrapper = styled.div`
+  display:flex;
+  justify-content:center;
+`
 export default function NavBar() {
   return (
-    <div>
+    <Wrapper>
       <NavigationWrapper>
         <Link href={'/'} passHref>
           <EmphasisLink>Home</EmphasisLink>
@@ -33,6 +35,6 @@ export default function NavBar() {
           <NormalLink>착한가게란?</NormalLink>
         </Link>
       </NavigationWrapper>
-    </div>
+    </Wrapper>
   );
 }
