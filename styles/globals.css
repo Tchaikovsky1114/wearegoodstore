@@ -1,9 +1,12 @@
 html,
 body {
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 520px;
+  width:100%;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: beige;
 }
 
 a {
@@ -13,4 +16,9 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+img{
+  display: block;
+  border-radius: 10px;
 }
