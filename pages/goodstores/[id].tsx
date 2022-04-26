@@ -6,12 +6,12 @@ import { IStoreData } from '../goodstore';
 export default function Details({ store }: { store:IStoreData }) {
   return (
     <>
-      <Helmet title="상세페이지" />
+      <Helmet title={store["업소명"]} />
       <div>{store["업소명"]}</div>
     </>
   );
 }
-
+  
 
 
 export const getStaticProps = async ({

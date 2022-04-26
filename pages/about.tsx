@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Button from '../components/assets/Button';
 import Helmet from '../components/Helmet';
 import {
   EmphasisWord,
@@ -7,7 +8,6 @@ import {
   SubTheme,
   SubTitle,
   SubDescription,
-  Button,
   CenterAlign
 } from '../components/Styles';
 import goodStoreBanner from '../public/image/init_title04.png';

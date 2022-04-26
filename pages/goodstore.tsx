@@ -1,20 +1,13 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import React, { FormEvent, MouseEventHandler, useState } from 'react';
+import Input from '../components/assets/Input';
 import Helmet from '../components/Helmet';
-import {
-  Button,
-  Section,
-  StoreCard,
-  StoreList,
-  StoreTitle,
-  SubDescription,
-  SubTitle,
-  ButtonWrapper,
-} from '../components/Styles';
+import FilteredStore from '../components/Stores/FilteredStore';
+import SearchedStore from '../components/Stores/SearchedStore';
+import { Section } from '../components/Styles';
 
 export interface IStoreData {
-  filteredData: [];
   가격: number;
   대표자: string;
   대표품목: string;
@@ -30,41 +23,44 @@ export interface IStoreData {
   주차가능여부: string;
 }
 
-export default function GoodStore({ filteredData }: IStoreData) {
+export default function GoodStore({
+  filteredData,
+}: {
+  filteredData: IStoreData[];
+}) {
   const [pagenation, setPagenation] = useState(0);
-
+  
+  const [isSearched, setIsSearched] = useState(false);
   const handleIncreaseNumber = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setPagenation((prev) => prev + 16);
     if (e.currentTarget.textContent !== '더보기') {
       e.currentTarget.textContent = '더보기';
-      console.log(filteredData);
     }
   };
+  
   return (
     <>
       <Helmet title="GoodStore" />
       <Section>
-        <h1>GoodStore Page</h1>
+        <h1>동네에서 찾아보기</h1>
+        <div>
+          <Input filteredData={filteredData} type="text" placeholder="우리동네 착한가게" />
+        </div>
       </Section>
-      <StoreList>
-        {filteredData?.slice(0, pagenation).map((store) => (
-          <Link href={`/goodstores/${store['순번']}`} key={store['순번']} passHref>
-            <StoreCard>
-              <StoreTitle>{store['업소명']}</StoreTitle>
-              <SubTitle>{store['대표품목']}</SubTitle>
-              <SubDescription>
-                {parseInt(store['가격']).toLocaleString()} 원
-              </SubDescription>
-              <SubDescription>
-                {store['시/군/구']} {store['주소(도로명 새주소 명기)']}
-              </SubDescription>
-            </StoreCard>
-          </Link>
-        ))}
-      </StoreList>
-      <ButtonWrapper>
-        <Button onClick={handleIncreaseNumber}>착한가게</Button>
-      </ButtonWrapper>
+      {!isSearched && (
+        <FilteredStore
+          pagenation={pagenation}
+          handleIncreaseNumber={handleIncreaseNumber}
+          filteredData={filteredData}
+        />
+      )}
+      {isSearched && (
+        <SearchedStore
+          pagenation={pagenation}
+          handleIncreaseNumber={handleIncreaseNumber}
+          filteredData={filteredData}
+        />
+      )}
     </>
   );
 }
@@ -91,7 +87,7 @@ export async function getServerSideProps() {
     )
   ).json();
   const filteredData = data.filter(
-    ({ 업종 }: IStoreData) => !filterStore.includes(업종)
+    ({ 업종 }: { 업종: string }) => !filterStore.includes(업종)
   );
 
   return {

@@ -3,14 +3,15 @@ import styled from '@emotion/styled';
 export const EmphasisLink = styled.a`
   font-size: 22px;
   font-weight: bold;
-  color: #591fff;
+  color: #a13111;
 
   &:hover {
     text-decoration: underline;
   }
 `;
 export const NormalLink = styled.a`
-  font-size: 18px;
+  font-size: 14px;
+  font-weight:bold;
   &:hover {
     text-decoration: underline;
   }
@@ -57,7 +58,6 @@ export const StoreTitle = styled.h2`
   font-size: 18px;
 `
 
-
 export const SubTheme = styled.p`
   display:flex;
   justify-content: flex-start;
@@ -81,29 +81,13 @@ export const SubTitle = styled.p`
 export const SubDescription = styled.p`
   font-size: 14px;
   color: black;
-  word-break: keep-all;
+  
 `
 export const ButtonWrapper = styled.div`
 margin: 2rem auto;
 display:flex;
 justify-content:center;
 align-items:center;
-
-`
-export const Button = styled.a`
-  border: 1px solid black;
-  padding: 1rem;
-  border-radius:10px;
-  background-color:beige;
-  font-size: 14px;
-  font-weight:bold;
-  color: #b23;
-  cursor: pointer;
-  &:hover{
-    color:white;
-    background-color:#b23;
-    
-  }
 `
 
 export const CenterAlign = styled.div`
@@ -112,3 +96,4 @@ export const CenterAlign = styled.div`
   align-items:center;
   
 `
+
