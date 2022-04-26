@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
+import DetailLayout from '../../components/assets/Layouts/DetailLayout';
 import Helmet from '../../components/Helmet';
 import { IStoreData } from '../goodstore';
 
@@ -7,7 +8,10 @@ export default function Details({ store }: { store:IStoreData }) {
   return (
     <>
       <Helmet title={store["업소명"]} />
-      <div>{store["업소명"]}</div>
+      <DetailLayout>
+      <h1>{store["업소명"]}</h1>
+        <h2>대표매뉴 : {store["대표품목"]}</h2>
+      </DetailLayout>
     </>
   );
 }

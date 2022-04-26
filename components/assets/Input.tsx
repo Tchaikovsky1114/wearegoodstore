@@ -1,59 +1,26 @@
 import styled from '@emotion/styled';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { IStoreData } from '../../pages/goodstore';
 import SearchSVG from './svg/SearchSVG';
 
 interface IInputProps {
   [key: string]: any;
-  filteredData: IStoreData[];
 }
 
-interface IResult {
-  0?: number;
-  1?: string;
-  2?: string;
-  3?: string;
-  4?: number;
-  5?: string;
-  6?: string;
-  7?: string;
-  8?: string;
-  9?: string;
-  10?: string;
-  11?: string;
-  12?: string;
-}
-
-const Input = ({ filteredData, ...props }: IInputProps) => {
-  const baseData = filteredData.map((store) => Object.values(store));
-  const [searchedData, setSearchedData] = useState<any[]>();
-
-  const handleSearchingStore = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-  const handleInputValue = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      const result = [...baseData].filter((store) =>
-        store.join(',').includes(e.currentTarget.value)
-      );
-      setSearchedData(result);
-    }
-  };
-  console.log(searchedData);
+const Input = ({ ...props }: IInputProps) => {
   return (
     <>
-      <SearchForm onSubmit={handleSearchingStore}>
+      <SearchForm>
         <SearchWrapper>
           <SearchSVG />
         </SearchWrapper>
-        <MainInput onKeyUp={handleInputValue} {...props} />
-        <SubmitInput type="submit" value="찾기" />
+        <MainInput onKeyUp={props.handleInputValue} />
+        <SubmitInput>찾기</SubmitInput>
       </SearchForm>
     </>
   );
 };
 
-const SearchForm = styled.form`
+const SearchForm = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
@@ -74,7 +41,7 @@ const MainInput = styled.input`
     box-shadow: 5px 5px 20px #a13111;
   }
 `;
-const SubmitInput = styled.input`
+const SubmitInput = styled.button`
   position: absolute;
   right: 140px;
   border: 0;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import React, { FormEvent, MouseEventHandler, useState } from 'react';
+import React, { Dispatch, FormEvent, MouseEventHandler, SetStateAction, useState } from 'react';
 import Input from '../components/assets/Input';
 import Helmet from '../components/Helmet';
 import FilteredStore from '../components/Stores/FilteredStore';
@@ -23,13 +23,33 @@ export interface IStoreData {
   주차가능여부: string;
 }
 
+export interface ISearchedData {
+  0?: number;
+  1?: string;
+  2?: string;
+  3?: string;
+  4?: number;
+  5?: string;
+  6?: string;
+  7?: string;
+  8?: string;
+  9?: string;
+  10?: string;
+  11?: string;
+  12?: string;
+}
+
+interface ISearchedDataProps {
+  searchedData: ISearchedData[]
+  setSearchedData: React.Dispatch<React.SetStateAction<ISearchedDataProps[]>>
+}
+
 export default function GoodStore({
   filteredData,
 }: {
   filteredData: IStoreData[];
 }) {
   const [pagenation, setPagenation] = useState(0);
-  
   const [isSearched, setIsSearched] = useState(false);
   const handleIncreaseNumber = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setPagenation((prev) => prev + 16);
@@ -37,15 +57,37 @@ export default function GoodStore({
       e.currentTarget.textContent = '더보기';
     }
   };
+  const baseData = filteredData.map((store:IStoreData):ISearchedData[] => Object.values(store));
+  const [searchedData, setSearchedData] = useState<any>();
   
+  const handleSearchingStore = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+  };
+  const handleInputValue = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setIsSearched(true);
+      const result = [...baseData].filter((store:ISearchedData[]):boolean =>
+        store.join(',').includes(e.currentTarget.value)
+      );
+      
+      setSearchedData(result);
+    }
+  };
+  console.log(searchedData);
   return (
     <>
       <Helmet title="GoodStore" />
       <Section>
         <h1>동네에서 찾아보기</h1>
-        <div>
-          <Input filteredData={filteredData} type="text" placeholder="우리동네 착한가게" />
-        </div>
+
+        <Input
+          handleSearchingStore={handleSearchingStore}
+          handleInputValue={handleInputValue}
+          filteredData={filteredData}
+          type="text"
+          placeholder="우리동네 착한가게"
+        />
       </Section>
       {!isSearched && (
         <FilteredStore
@@ -54,13 +96,13 @@ export default function GoodStore({
           filteredData={filteredData}
         />
       )}
-      {isSearched && (
+       {isSearched && (
         <SearchedStore
           pagenation={pagenation}
           handleIncreaseNumber={handleIncreaseNumber}
-          filteredData={filteredData}
+          searchedData={searchedData}
         />
-      )}
+      )} 
     </>
   );
 }

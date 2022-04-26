@@ -15,6 +15,7 @@ export interface IGoodStoreProps {
   pagenation: number;
   handleIncreaseNumber: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   filteredData: IStoreData[];
+  
 }
 
 const FilteredStore = ({
