@@ -6,6 +6,8 @@ import Helmet from '../../components/Helmet';
 import { IStoreData } from '../goodstore';
 import Reply from '../../components/Reply'
 import { ChangeEvent, ReactNode, useState } from 'react';
+import { EmphasisWord, StoreTitle } from '../../components/Styles';
+import styled from '@emotion/styled';
 
 
 
@@ -21,8 +23,33 @@ export interface IInputprops {
   comment: string;
 }
 
+const EtcInpoList = styled.ul`
+  margin: 1rem 0 5rem 0;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
 
-
+`
+const EtcInpoItem = styled.li`
+  display:flex;
+  width: 100%;
+  justify-content:flex-start;
+  align-items:center;
+  padding: .5rem 0;
+  border-bottom:1px solid #ccc;
+  gap:100px;
+  span{
+    display:block;
+    flex-basis:0;
+    flex-grow: 1;
+    
+  }
+  span:nth-of-type(2){
+    color: #b82;
+  }
+`
 
 
 
@@ -57,10 +84,21 @@ export default function Details({ store }: { store:IStoreData }) {
     <>
       <Helmet title={store["업소명"]} />
       <DetailLayout>
-      <h1>{store["업소명"]}</h1>
-        <h2>대표매뉴 : {store["대표품목"]}</h2>
-        <h3>가격: {store["가격"].toLocaleString()} 원</h3>
+      <h1 style={{marginBottom:'1rem',color:'#b23'}}>{store["업소명"]}</h1>
+        <h2 style={{marginBottom:'1rem',fontSize:'18px'}}>대표매뉴 : {store["대표품목"]}</h2>
+        <h3 style={{marginBottom:'1rem',fontSize:'14px'}}>가격(1인분)  {store["가격"].toLocaleString()} 원</h3>
       <Image src={'/image/goodstoreimage.jpg'} width={480} height={480} alt="store" />
+      <div>
+        
+        <EtcInpoList>
+        <StoreTitle>기타 정보</StoreTitle>
+          <EtcInpoItem><EmphasisWord>주차</EmphasisWord><span>{store["주차가능여부"] === 'Y' ? "주차가능" : "주차불가능" }</span></EtcInpoItem>
+          <EtcInpoItem><EmphasisWord>배달</EmphasisWord><span>{store["배달가능여부"] === 'Y' ? "배달가능" : "배달불가능" }</span></EtcInpoItem>
+          <EtcInpoItem><EmphasisWord>영업시간</EmphasisWord><span>{store["영업시간"]}</span></EtcInpoItem>
+          <EtcInpoItem><EmphasisWord>주차</EmphasisWord><span>{store["연락처"] }</span></EtcInpoItem>
+        </EtcInpoList>
+        
+      </div>
       <div>
       <h3>방문후기</h3>
       {commentlist.map((comment,i) =>
