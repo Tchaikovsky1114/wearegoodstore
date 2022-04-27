@@ -1,16 +1,75 @@
 import { GetStaticProps } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import DetailLayout from '../../components/assets/Layouts/DetailLayout';
 import Helmet from '../../components/Helmet';
 import { IStoreData } from '../goodstore';
+import Reply from '../../components/Reply'
+import { ChangeEvent, ReactNode, useState } from 'react';
+
+
+
+
+
+
+
+
+
+
+
+export interface IInputprops {
+  comment: string;
+}
+
+
+
+
+
+
 
 export default function Details({ store }: { store:IStoreData }) {
+
+  const [inputValue,setInputValue] = useState({
+    comment: ''
+  })
+  const [commentlist, setCommentlist] = useState<any[]>([])
+
+  const {comment} = inputValue;
+  const handleInputValue = (e:ChangeEvent<HTMLInputElement>) => { 
+    setInputValue({
+      comment:e.currentTarget.value
+    })
+}
+  
+  const handleSubmit = () =>{
+  setCommentlist([...commentlist,comment])
+  console.log(commentlist);
+  }
+
+  const handleEnter = (e:React.KeyboardEvent<HTMLInputElement>) =>{
+    if(e.key === 'Enter'){
+      handleSubmit()
+    }
+    
+  }
+
   return (
     <>
       <Helmet title={store["업소명"]} />
       <DetailLayout>
       <h1>{store["업소명"]}</h1>
         <h2>대표매뉴 : {store["대표품목"]}</h2>
+        <h3>가격: {store["가격"].toLocaleString()} 원</h3>
+      <Image src={'/image/goodstoreimage.jpg'} width={480} height={480} alt="store" />
+      <div>
+      <h3>방문후기</h3>
+      {commentlist.map((comment,i) =>
+        <ul key={i}>
+        <li>{comment}</li>
+      </ul> )}
+
+      <Reply handleInputValue={handleInputValue} handleSubmit={handleSubmit} handleEnter={handleEnter} />
+      </div>        
       </DetailLayout>
     </>
   );

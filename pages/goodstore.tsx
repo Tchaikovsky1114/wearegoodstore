@@ -74,7 +74,7 @@ export default function GoodStore({
       setSearchedData(result);
     }
   };
-  console.log(searchedData);
+  
   return (
     <>
       <Helmet title="GoodStore" />
