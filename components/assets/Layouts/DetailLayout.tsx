@@ -4,13 +4,13 @@ import React, { ReactNode } from 'react';
 import router, { useRouter } from 'next/router'
 import Button from '../Button'
 import { ButtonWrapper } from '../../Styles';
-interface IDetailLayoutProps {
+export interface LayoutProps {
   children: ReactNode
 }
 
 
 
-const DetailLayout = ({children}:IDetailLayoutProps) => {
+const DetailLayout = ({children}:LayoutProps) => {
   const router = useRouter()
   return (
     <Layout>
