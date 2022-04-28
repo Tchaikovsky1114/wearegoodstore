@@ -5,9 +5,9 @@ import { ButtonWrapper } from './Styles';
 
 
 interface IInputFunc {
-  handleInputValue: (e:ChangeEvent<HTMLInputElement>) => void
+  handleInputValue: (e:ChangeEvent<HTMLTextAreaElement>) => void
   handleSubmit: () => void
-  handleEnter: (e:React.KeyboardEvent<HTMLInputElement>) => void
+  handleEnter: (e:React.KeyboardEvent<HTMLTextAreaElement>) => void
 }
 
 
@@ -16,7 +16,7 @@ const Reply = ({handleInputValue,handleSubmit,handleEnter}:IInputFunc) => {
   return (
     <div>
       <ReplyWrapper>
-        <input type="text" onChange={handleInputValue} onKeyDown={handleEnter} />
+        <textarea onChange={handleInputValue} onKeyDown={handleEnter} />
         <ButtonWrapper style={{display:'flex',gap:'20px'}}>
         <Button style={{padding:'0.5rem',border:'0'}} onClick={handleSubmit}>등록</Button>
         </ButtonWrapper>
@@ -37,7 +37,7 @@ border: 5px solid #b23;
 box-sizing: border-box;
 border-radius: 20px;
 
-input{
+textarea{
   background-color: #f5ffac;
   margin: 1rem;
   min-width: 400px;
@@ -46,7 +46,7 @@ input{
   border:0;
   font-size:14px;
   font-weight:bold;
-  
+  padding: 2rem;
   &:focus{
     outline: 3px solid #b23;
   }
