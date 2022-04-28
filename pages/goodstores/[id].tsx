@@ -62,7 +62,7 @@ export default function Details({ store }: { store:IStoreData }) {
   const [commentlist, setCommentlist] = useState<any[]>([])
 
   const {comment} = inputValue;
-  const handleInputValue = (e:ChangeEvent<HTMLInputElement>) => { 
+  const handleInputValue = (e:ChangeEvent<HTMLTextAreaElement>) => { 
     setInputValue({
       comment:e.currentTarget.value
     })
@@ -73,7 +73,7 @@ export default function Details({ store }: { store:IStoreData }) {
   console.log(commentlist);
   }
 
-  const handleEnter = (e:React.KeyboardEvent<HTMLInputElement>) =>{
+  const handleEnter = (e:React.KeyboardEvent<HTMLTextAreaElement>) =>{
     if(e.key === 'Enter'){
       handleSubmit()
     }

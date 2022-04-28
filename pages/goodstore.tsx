@@ -39,42 +39,48 @@ export interface ISearchedData {
   12?: string;
 }
 
-interface ISearchedDataProps {
-  searchedData: ISearchedData[]
-  setSearchedData: React.Dispatch<React.SetStateAction<ISearchedDataProps[]>>
-}
 
-export default function GoodStore({
-  filteredData,
-}: {
-  filteredData: IStoreData[];
-}) {
+
+export default function GoodStore({filteredData}: {filteredData: IStoreData[];}) {
   const [pagenation, setPagenation] = useState(0);
   const [isSearched, setIsSearched] = useState(false);
+  const baseData = filteredData.map((store:IStoreData):ISearchedData[] => Object.values(store));
+  const [searchedData, setSearchedData] = useState<any>();
+  const [searchInputValue,setSearchInputValue] = useState('')
+  const searchValue = searchInputValue;
+
   const handleIncreaseNumber = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setPagenation((prev) => prev + 16);
     if (e.currentTarget.textContent !== '더보기') {
       e.currentTarget.textContent = '더보기';
     }
   };
-  const baseData = filteredData.map((store:IStoreData):ISearchedData[] => Object.values(store));
-  const [searchedData, setSearchedData] = useState<any>();
-  
-  const handleSearchingStore = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-  };
+
   const handleInputValue = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setIsSearched(true);
-      const result = [...baseData].filter((store:ISearchedData[]):boolean =>
-        store.join(',').includes(e.currentTarget.value)
-      );
-      
-      setSearchedData(result);
+    const result = baseData.filter((store:ISearchedData[]):boolean =>
+      store.join(',').includes(e.currentTarget.value)
+    );
+    setSearchedData(result);
     }
   };
   
+  const handleSearch = (e:React.MouseEvent<HTMLButtonElement>) =>{
+    setIsSearched(true);
+    const result = baseData.filter((store:ISearchedData[]):boolean =>
+      store.join(',').includes(searchValue)
+    );
+    setSearchedData(result);  
+  }
+
+  
+  const handleSearchValue = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    setIsSearched(true);
+    setSearchInputValue(e.currentTarget.value)
+    console.log(searchValue)
+  }
+
   return (
     <>
       <Helmet title="GoodStore" />
@@ -82,11 +88,10 @@ export default function GoodStore({
         <h1>동네에서 찾아보기</h1>
 
         <Input
-          handleSearchingStore={handleSearchingStore}
           handleInputValue={handleInputValue}
-          filteredData={filteredData}
-          type="text"
-          placeholder="우리동네 착한가게"
+          handleSearch={handleSearch}
+          handleSearchValue={handleSearchValue}
+          searchInputValue={searchInputValue}
         />
       </Section>
       {!isSearched && (
